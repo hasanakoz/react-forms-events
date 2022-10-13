@@ -11,6 +11,13 @@ const KeyboardClipboard = () => {
       alert("please dont enter number!");
       e.preventDefault();
     }
+    e.keyCode === 13 && setInputValue("");
+  };
+
+  const handleAreaPaste = (e) => {
+    e.target.style.border = "2px solid red";
+    e.target.value = e.clipboardData.getData("text");
+    e.preventDefault();
   };
 
   return (
@@ -24,9 +31,26 @@ const KeyboardClipboard = () => {
           setInputValue(e.target.value);
         }}
         onKeyDown={handleKeyDown}
+        value={inputValue}
       />
 
-      <p className="text-start mt-4">{inputValue}</p>
+      <p
+        onCopy={(e) => {
+          e.preventDefault();
+          alert("you cannot copy");
+        }}
+        className="text-start mt-4"
+      >
+        {inputValue}
+      </p>
+
+      <textarea
+        className="form-control"
+        name="area"
+        id="area"
+        rows="10"
+        onPaste={handleAreaPaste}
+      ></textarea>
     </div>
   );
 };
